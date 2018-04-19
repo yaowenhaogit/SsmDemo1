@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<link href="static/bootstrap-3.3.7-dist/css/bootstrap.min.css" rel="stylesheet">
+<script src="static/js/jquery-3.2.0.min.js"></script>
+<script src="static/bootstrap-3.3.7-dist/js/bootstrap.min.js"></script>
+</head>
+<body>
+	<div class="jumbotron">
+	  <div style="text-align: center;">
+		  	<form action="shiro/login.do" method="post">
+		  			<span id="Msg"></span><br>
+				用户名 :　<input type="text" name="username" id="username"><br><br>
+				密码 :　     <input type="password" name="password" id="password"><br><br>
+			</form>
+				<button class="btn btn-success" id="button">登录</button>
+				<button class="btn btn-success" id="register">注册</button>
+	  	</div>
+	</div>
+	<script type="text/javascript">
+		$("#button").click(function(){
+		   var username = $("#username").val();
+		   var password = $("#password").val();
+		    $.ajax({
+				type:"post",
+				url:"/ssmDemo/shiro/login.do",
+				data:{
+				  "username":username,
+				   "password":password
+				},
+				dataType:"json",
+				success :function(data){
+					if (data.r=="ok") {
+					    window.location='/ssmDemo/list.html';
+					}else {
+					    $("#Msg").css('color','red')
+					    $("#Msg").html(data);
+					}				    
+				}
+		    })
+		})
+	</script>
+</body>
+
+</html>

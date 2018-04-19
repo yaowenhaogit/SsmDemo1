@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="UTF-8" ?>  
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.atguigu.crud.dao.TblEmpMapper">
+	    <resultMap id="tblEmp" type="com.atguigu.crud.bean.TblEmp">
+                  <result column="emp_id" property="empId" />
+ 		          <result column="emp_name" property="empName" />
+ 		          <result column="gender" property="gender" />
+ 		          <result column="email" property="email" />
+ 		          <result column="d_id" property="dId" />
+ 		</resultMap>
+
+    
+    	
+	<insert id="insert" parameterType="com.atguigu.crud.bean.TblEmp" useGeneratedKeys="true" keyProperty="empId">
+		INSERT INTO tbl_emp (  							emp_id ,						
+							emp_name ,						
+							gender ,						
+							email ,						
+							d_id 						
+		) VALUES ( 							#{empId,jdbcType=BIGINT},						
+							#{empName,jdbcType=VARCHAR},						
+							#{gender,jdbcType=VARCHAR},						
+							#{email,jdbcType=VARCHAR},						
+							#{dId,jdbcType=BIGINT}						
+		)
+	</insert>
+	
+	<update id="update" parameterType="com.atguigu.crud.bean.TblEmp">
+		UPDATE tbl_emp	
+	<trim prefix="set" suffixOverrides="," >  
+	 				 <if test="empId != null">emp_id=#{empId},</if>
+				 				 <if test="empName != null">emp_name=#{empName},</if>
+				 				 <if test="gender != null">gender=#{gender},</if>
+				 				 <if test="email != null">email=#{email},</if>
+								 <if test="dId != null">d_id=#{dId}</if>
+		 	</trim> 
+		WHERE 			emp_id=#{empId}       
+	</update>
+	
+	<delete id="deleteByPrimaryKey" parameterType="Long">
+        DELETE FROM tbl_emp	 WHERE 			emp_id=#{empId}      </delete>
+	
+	<delete id="deleteBySelective" parameterType="com.atguigu.crud.bean.TblEmp">
+        DELETE FROM tbl_emp	 
+         <where>   
+		       <if test="empId != null">emp_id = #{empId}</if>  
+        		       <if test="empName != null">and emp_name = #{empName}</if> 
+	    		       <if test="gender != null">and gender = #{gender}</if> 
+	    		       <if test="email != null">and email = #{email}</if> 
+	    		       <if test="dId != null">and d_id = #{dId}</if> 
+	    	</where>
+    </delete>
+    
+	<select id="findById" parameterType="java.lang.Long" resultMap="tblEmp">
+		SELECT 
+			emp_id as "empId" ,			
+			emp_name as "empName" ,			
+			gender as "gender" ,			
+			email as "email" ,			
+			d_id as "dId" 			
+		FROM tbl_emp
+		WHERE
+			emp_id=#{empId} 	</select>
+	
+<select id="findBySelective" parameterType="com.atguigu.crud.bean.TblEmp" resultType="com.atguigu.crud.bean.TblEmp">
+	SELECT
+			 emp_id as "empId" ,			
+			 emp_name as "empName" ,			
+			 gender as "gender" ,			
+			 email as "email" ,			
+			 d_id as "dId" 			
+	FROM  tbl_emp  
+	      <where> 
+		       <if test="empId != null">emp_id = #{empId}</if>  
+        		       <if test="empName != null">and emp_name = #{empName}</if> 
+	    		       <if test="gender != null">and gender = #{gender}</if> 
+	    		       <if test="email != null">and email = #{email}</if> 
+	    		       <if test="dId != null">and d_id = #{dId}</if> 
+	    		</where>
+	order by id desc
+	<if test="startIndex!=null and maxResults!=null">
+			limit #{ startIndex }, #{ maxResults }
+		</if>
+	</select>
+
+	<select id="findBySelectiveCount"  resultType="java.lang.Integer">
+		SELECT count(1) 
+		FROM tbl_emp 
+		 <where> 
+		       <if test="empId != null">emp_id = #{empId}</if>  
+        		       <if test="empName != null">and emp_name = #{empName}</if> 
+	    		       <if test="gender != null">and gender = #{gender}</if> 
+	    		       <if test="email != null">and email = #{email}</if> 
+	    		       <if test="dId != null">and d_id = #{dId}</if> 
+	    		</where>
+	</select>
+</mapper>

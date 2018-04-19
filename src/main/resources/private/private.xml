@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<system>
+	<page  tblEmpSearch="tblEmpSearch.jsp">
+		<empDetail>tblEmpDetail</empDetail>
+		<empDelete>tblEmpDelete</empDelete>
+		<empUpdate>tblEmpUpdate</empUpdate>
+	</page>
+	<page tnlDeptSearch="tnlDeptSearch.jsp">
+		<deptDetail>tnlDeptDetail</deptDetail>
+		<deptDelete>tnlDeptDelete</deptDelete>
+		<deptUpdate>tnlDeptpdate</deptUpdate>
+	</page>
+</system> 
